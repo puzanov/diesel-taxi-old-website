@@ -4,6 +4,7 @@ require "sinatra"
 require "net/http"
 require "uri"
 require "json"
+require "memcached"
 
 set :port, 1983
 
@@ -12,11 +13,20 @@ get '/' do
 end
 
 get '/cars' do
-  http = Net::HTTP.new("testnambaapi.zapto.org", 8085)
-  request = Net::HTTP::Post.new("/SmartServerApi/Api/GetFreeDrivers")
-  request.set_form_data({"foo" => "bar"})
-  response = http.request(request)
   content_type :json
-  @cars = JSON.parse(response.body)
+
+  $cache = Memcached.new("localhost:11211")
+
+  begin
+    @cars = $cache.get "cars"
+  rescue Memcached::NotFound
+    http = Net::HTTP.new("testnambaapi.zapto.org", 8085)
+    request = Net::HTTP::Post.new("/SmartServerApi/Api/GetFreeDrivers")
+    request.set_form_data({"foo" => "bar"})
+    response = http.request(request)
+    @cars = JSON.parse(response.body)
+    $cache.set "cars", @cars, 60
+  end
+
   @cars["Drivers"].to_json
 end

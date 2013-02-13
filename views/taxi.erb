@@ -47,8 +47,17 @@
         disableDefaultUI: true,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
-      var map = new google.maps.Map(document.getElementById("wrap"),
-          mapOptions);
+
+      var map = new google.maps.Map(document.getElementById("wrap"), mapOptions);
+
+      var myLatlng = new google.maps.LatLng(42.8851883, 74.605305);
+      var marker = new google.maps.Marker({
+        position: myLatlng,
+        map: map,
+        title:"Борт номер 58",
+        icon: "/ima/marker.png"
+      });
+
     }
   </script>
 </body>

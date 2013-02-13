@@ -17,5 +17,6 @@ get '/cars' do
   request.set_form_data({"foo" => "bar"})
   response = http.request(request)
   content_type :json
-  @cars = JSON.parse(response.body).to_json
+  @cars = JSON.parse(response.body)
+  @cars["Drivers"].to_json
 end

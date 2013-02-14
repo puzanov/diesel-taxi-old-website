@@ -19,17 +19,56 @@
     </div>
   </div>
 
-  <form>
+  <form id="order">
     <fieldset>
       <legend>Онлайн заказ такси</legend>
+      <div id="result" class="alert"></div>
       <div>
-        <textarea rows="3" placeholder="Адрес..."></textarea>
+        <textarea rows="3" id="address" name="address" placeholder="Адрес..." maxlength="500"></textarea>
+      </div>
+      <div class="controls controls-row">
+        <select class="span1" id="code" name="code">
+          <optgroup label="Мегаком">
+            <option>551</option>
+            <option>552</option>
+            <option>553</option>
+            <option>554</option>
+            <option>555</option>
+            <option>556</option>
+            <option>557</option>
+            <option>558</option>
+            <option>559</option>
+          </optgroup>
+          <optgroup label="Билайн">
+            <option>770</option>
+            <option>771</option>
+            <option>772</option>
+            <option>773</option>
+            <option>775</option>
+            <option>777</option>
+            <option>778</option>
+            <option>779</option>
+          </optgroup>
+          <optgroup label="Ошка">
+            <option>700</option>
+            <option>701</option>
+            <option>702</option>
+            <option>703</option>
+            <option>704</option>
+            <option>705</option>
+            <option>706</option>
+            <option>707</option>
+            <option>708</option>
+            <option>709</option>
+          </optgroup>
+          <optgroup label="Кыргызтелеком">
+            <option>312</option>
+          </optgroup>
+        </select>
+        <input class="span2" type="text" id="phone" name="phone" placeholder="Телефон..." maxlength="6">
       </div>
       <div>
-        <input type="text" placeholder="Телефон...">
-      </div>
-      <div>
-        <button type="submit" class="btn btn-success">Заказать такси</button>
+        <button type="submit" id="fire" class="btn btn-success">Заказать такси</button>
       </div>
     </fieldset>
   </form>
@@ -40,6 +79,25 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3dZ4iZ-PFMgI6axi0L-gwmPt_wvMA6y0&sensor=true">
   </script>
   <script type="text/javascript">
+    $("#fire").click(function(){
+      $.post("/order", $("#order").serialize(),
+        function(data){
+          var t;
+          if (data.result == 'ok') {
+            $("#address").hide();
+            $("#code").hide();
+            $("#phone").hide();
+            $("#fire").hide();
+            t = "<span class='label label-success'>Ваш заказ принят</span><br>"+data.message;
+            $("#result").html(t).removeClass("alert-error").addClass("alert-success").show();
+          } else {
+            t = "<span class='label label-important'>Ошибка!</span><br>"+data.message;
+            $("#result").html(t).removeClass("alert-success").addClass("alert-error").show();
+          }
+        }, "json");
+      return false;
+    });
+
     function initialize() {
       var mapOptions = {
         center: new google.maps.LatLng(42.876066,74.591289),

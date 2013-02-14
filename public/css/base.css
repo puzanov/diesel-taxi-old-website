@@ -52,3 +52,8 @@ form div {
   margin: 20px;
   z-index: 100;
 }
+
+#result {
+  display: none;
+  width:160px;
+}

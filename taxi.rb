@@ -6,10 +6,21 @@ require 'uri'
 require 'json'
 require 'memcached'
 
+### configure ###
+
 CARS  = '/SmartServerApi/Api/GetFreeDrivers'
 ORDER = '/SmartServerApi/Api/MakeOrderAsIncomingSms'
 
 set :port, 1983
+
+if ARGV[0] == 'production'
+  set :environment, :production
+  set :server, %w[thin]
+else
+  set :server, %w[webrick]
+end
+
+### web methods ###
 
 get '/' do
   erb :taxi
@@ -38,14 +49,29 @@ post '/order' do
     return {:result => 'error', :message => 'Вы не указали номер вашего телефона'}.to_json
   end
 
+  if params[:phone].size != 6
+    return {:result => 'error', :message => 'Вы указали не верный номер телефона'}.to_json
+  end
+
+  begin
+    Integer(params[:phone])
+  rescue
+    return {:result => 'error', :message => 'Номер телефона должен состоять только из цифр'}.to_json
+  end
+
   if params[:code].empty?
     return {:result => 'error', :message => 'Вы не указали код номера вашего телефона'}.to_json
   end
 
-  case make_request_for(ORDER, {:Phone => '+996'+ params[:code] + params[:phone], :Message => params[:address]})
-    when Net::HTTPOK then
-      @result = {:result => 'ok', :message => 'Сейчас наш оператор свяжется с вами'}
-  else
+
+  begin
+    case make_request_for(ORDER, {:Phone => '+996'+ params[:code] + params[:phone], :Message => params[:address]})
+      when Net::HTTPOK then
+        @result = {:result => 'ok', :message => 'Сейчас наш оператор свяжется с вами'}
+    else
+      @result = {:result => 'error', :message => 'Технические неполадки'}
+    end
+  rescue
     @result = {:result => 'error', :message => 'Технические неполадки'}
   end
 
@@ -53,8 +79,18 @@ post '/order' do
   @result.to_json
 end
 
+### helper functions ###
+
+def get_api_host_and_port
+  if ARGV[0] == 'production'
+    {:host => '212.42.119.12', :port => 80}
+  end
+  {:host => 'testnambaapi.zapto.org', :port => 8085}
+end
+
 def make_request_for(uri, params)
-  http = Net::HTTP.new('testnambaapi.zapto.org', 8085)
+  api = get_api_host_and_port
+  http = Net::HTTP.new(api[:host], api[:port])
   request = Net::HTTP::Post.new(uri)
   request.set_form_data(params)
   http.request(request)

@@ -83,7 +83,7 @@ end
 
 def get_api_host_and_port
   if ARGV[0] == 'production'
-    {:host => '212.42.119.12', :port => 80}
+    return {:host => '212.42.119.12', :port => 80}
   end
   {:host => 'testnambaapi.zapto.org', :port => 8085}
 end

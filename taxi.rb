@@ -89,9 +89,13 @@ def get_api_host_and_port
 end
 
 def make_request_for(uri, params)
+  request.logger.info("Making request to API: #{params.inspect}")
   api = get_api_host_and_port
+  request.logger.info("API address is #{api.inspect}")
   http = Net::HTTP.new(api[:host], api[:port])
   request = Net::HTTP::Post.new(uri)
   request.set_form_data(params)
-  http.request(request)
+  res = http.request(request)
+  request.logger.info("API result is #{res.inspect}")
+  return res
 end

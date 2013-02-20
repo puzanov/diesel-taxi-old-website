@@ -80,6 +80,9 @@
   </script>
   <script type="text/javascript">
     $("#fire").click(function(){
+      $("#result").hide();
+      $("#fire").attr("disabled", "disabled");
+      $("#fire").html('Обработка...');
       $.post("/order", $("#order").serialize(),
         function(data){
           var t;
@@ -94,7 +97,10 @@
             t = "<span class='label label-important'>Ошибка!</span><br>"+data.message;
             $("#result").html(t).removeClass("alert-success").addClass("alert-error").show();
           }
-        }, "json");
+        }, "json").done(function(){
+            $("#fire").removeAttr("disabled");
+            $("#fire").html('Заказать такси');
+          });
       return false;
     });
 

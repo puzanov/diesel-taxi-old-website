@@ -1,10 +1,12 @@
 require 'rubygems'
 require 'bundler/setup'
 require 'sinatra'
+require 'sinatra/cookies'
 require 'net/http'
 require 'uri'
 require 'json'
 require 'memcached'
+require 'time'
 
 ### configure ###
 
@@ -23,6 +25,7 @@ end
 ### web methods ###
 
 get '/' do
+  @code, @phone = cookies.values_at 'code', 'phone'
   erb :taxi
 end
 
@@ -72,6 +75,11 @@ post '/order' do
   rescue
     @result = {:result => 'error', :message => 'Технические неполадки'}
   end
+
+  response.set_cookie(:code, :value => params[:code],
+                      :expires => Time.gm(2020,1,1))
+  response.set_cookie(:phone, :value => params[:phone],
+                      :expires => Time.gm(2020,1,1))
 
   content_type :json
   @result.to_json

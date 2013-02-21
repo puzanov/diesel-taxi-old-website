@@ -29,43 +29,47 @@
       <div class="controls controls-row">
         <select class="span1" id="code" name="code">
           <optgroup label="Мегаком">
-            <option>551</option>
-            <option>552</option>
-            <option>553</option>
-            <option>554</option>
-            <option>555</option>
-            <option>556</option>
-            <option>557</option>
-            <option>558</option>
-            <option>559</option>
+            <option value="551">551</option>
+            <option value="552">552</option>
+            <option value="553">553</option>
+            <option value="554">554</option>
+            <option value="555">555</option>
+            <option value="556">556</option>
+            <option value="557">557</option>
+            <option value="558">558</option>
+            <option value="559">559</option>
           </optgroup>
           <optgroup label="Билайн">
-            <option>770</option>
-            <option>771</option>
-            <option>772</option>
-            <option>773</option>
-            <option>775</option>
-            <option>777</option>
-            <option>778</option>
-            <option>779</option>
+            <option value="770">770</option>
+            <option value="771">771</option>
+            <option value="772">772</option>
+            <option value="773">773</option>
+            <option value="775">775</option>
+            <option value="777">777</option>
+            <option value="778">778</option>
+            <option value="779">779</option>
           </optgroup>
           <optgroup label="Ошка">
-            <option>700</option>
-            <option>701</option>
-            <option>702</option>
-            <option>703</option>
-            <option>704</option>
-            <option>705</option>
-            <option>706</option>
-            <option>707</option>
-            <option>708</option>
-            <option>709</option>
+            <option value="700">700</option>
+            <option value="701">701</option>
+            <option value="702">702</option>
+            <option value="703">703</option>
+            <option value="704">704</option>
+            <option value="705">705</option>
+            <option value="706">706</option>
+            <option value="707">707</option>
+            <option value="708">708</option>
+            <option value="709">709</option>
+          </optgroup>
+          <optgroup label="Фонекс">
+            <option value="543">543</option>
+            <option value="545">545</option>
           </optgroup>
           <optgroup label="Кыргызтелеком">
-            <option>312</option>
+            <option value="312">312</option>
           </optgroup>
         </select>
-        <input class="span2" type="text" id="phone" name="phone" placeholder="Телефон..." maxlength="6">
+        <input class="span2" type="text" id="phone" name="phone" placeholder="Телефон..." maxlength="6" value="<%= @phone %>">
       </div>
       <div>
         <button type="submit" id="fire" class="btn btn-success">Заказать такси</button>
@@ -79,6 +83,10 @@
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3dZ4iZ-PFMgI6axi0L-gwmPt_wvMA6y0&sensor=true">
   </script>
   <script type="text/javascript">
+    $(function() {
+      $("select[name='code']").find("option[value='<%= @code %>']").prop("selected",true);
+    });
+
     $("#fire").click(function(){
       $("#result").hide();
       $("#fire").attr("disabled", "disabled");

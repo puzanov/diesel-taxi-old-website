@@ -48,6 +48,10 @@ post '/order' do
     return {:result => 'error', :message => 'Вы не указали адрес'}.to_json
   end
 
+  if params[:address].size > 500
+    return {:result => 'error', :message => 'Адрес слишком длинный'}.to_json
+  end
+
   if params[:phone].empty?
     return {:result => 'error', :message => 'Вы не указали номер вашего телефона'}.to_json
   end

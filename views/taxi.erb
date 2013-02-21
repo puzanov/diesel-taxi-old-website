@@ -115,6 +115,20 @@
 
       var map = new google.maps.Map(document.getElementById("wrap"), mapOptions);
 
+      if (navigator.geolocation) navigator.geolocation.getCurrentPosition(function(pos) {
+        var me = new google.maps.LatLng(pos.coords.latitude, pos.coords.longitude);
+        var myLoc = new google.maps.Marker({
+          clickable: false,
+          map: map,
+          icon: new google.maps.MarkerImage('//maps.gstatic.com/mapfiles/mobile/mobileimgs2.png',
+              new google.maps.Size(22,22),
+              new google.maps.Point(0,18),
+              new google.maps.Point(11,11))
+        });
+        myLoc.setPosition(me);
+        map.panTo(me);
+      });
+
       $.getJSON('/cars', function(data) {
         $.each(data, function(key, val) {
           var myLatlng = new google.maps.LatLng(val.Lat, val.Lng);
@@ -128,6 +142,15 @@
       });
 
     }
+
+    function onPositionUpdate(position) {
+      var lat = position.coords.latitude;
+      var lng = position.coords.longitude;
+    }
+
+    if(navigator.geolocation)
+      navigator.geolocation.getCurrentPosition(onPositionUpdate);
+
   </script>
 
   <div id="infoModal" class="modal hide fade">

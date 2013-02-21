@@ -9,16 +9,6 @@
 <body onload="initialize()">
   <div id="logo"><img src="/ima/logo.png" /></div>
   <div id="wrap"></div>
-  <div id="footer">
-    <div class="container">
-      <div class="contacts">
-        Контакты<br>
-        (0312) 976 000, (0559) 976 000, (0771) 60 9760<br>
-        (0709) 976 000 <b>Заказ по СМС</b> 9760
-      </div>
-    </div>
-  </div>
-
   <form id="order">
     <fieldset>
       <legend>Онлайн заказ такси</legend>
@@ -75,6 +65,9 @@
         <button type="submit" id="fire" class="btn btn-success">Заказать такси</button>
       </div>
     </fieldset>
+    <div class="info">
+      <a href="#infoModal" data-toggle="modal">Как это работает?</a>
+    </div>
   </form>
 
   <script src="/js/jquery.js"></script>
@@ -136,5 +129,30 @@
 
     }
   </script>
+
+  <div id="infoModal" class="modal hide fade">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+      <h3>Удобная форма заказа Namba Taxi</h3>
+    </div>
+    <div class="modal-body">
+      <p>ORDER.NAMBA.KG - это еще один быстрый способ воспользоваться услугами Namba Taxi. На карте вы видите свободных водителей такси, которые готовы принять ваш заказ.</p>
+      <p>Использовать сервис очень легко: укажите адрес, свой телефон и нажмите на кнопку заказа. Далее все как обычно: вам перезванивает оператор, подтверждает заказ и машина выезжает к вам.</p>
+      <p>Важно: узнать обновленное количество свободных машин и их расположение на карте можно, перезагрузив страницу через минуту.</p>
+      <p></p>
+      <p>Наши контакты:</p>
+      <ul>
+        <li>0 (312) 976 000</li>
+        <li>0 (559) 976 000</li>
+        <li>0 (771) 609 760</li>
+        <li>0 (709) 976 000</li>
+      </ul>
+      <p>Заказ по SMS: <b>9760</b></p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" data-dismiss="modal" aria-hidden="true">Закрыть</button>
+    </div>
+  </div>
+
 </body>
 </html>

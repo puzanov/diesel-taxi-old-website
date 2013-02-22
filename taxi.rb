@@ -7,6 +7,8 @@ require 'uri'
 require 'json'
 require 'memcached'
 require 'time'
+require 'ipaddr'
+require 'open-uri'
 
 ### configure ###
 
@@ -30,7 +32,7 @@ get '/' do
 end
 
 get '/cars' do
-  $cache = Memcached.new('localhost:11211')
+  $cache = get_memcache
 
   begin
     @cars = $cache.get 'cars'
@@ -44,6 +46,10 @@ get '/cars' do
 end
 
 post '/order' do
+  unless is_from_kg?
+    return {:result => 'error', :message => 'Система не распознала ваш IP-Address. Заказ возможен только для жителей Бишкека и его окрестностей'}.to_json
+  end
+
   if params[:address].empty?
     return {:result => 'error', :message => 'Вы не указали адрес'}.to_json
   end
@@ -107,5 +113,34 @@ def make_request_for(uri, params)
   req.set_form_data(params)
   res = http.request(req)
   request.logger.info("API result is #{res.inspect}")
-  return res
+  res
+end
+
+def get_memcache
+  Memcached.new('localhost:11211')
+end
+
+def kg_nets
+  $cache = get_memcache
+
+  begin
+    ip_ranges = $cache.get 'ip_ranges'
+  rescue Memcached::NotFound
+    ip_ranges = open('http://www.elcat.kg/ip/kg-nets.txt').read.split
+    ip_ranges << '127.0.0.0/8'
+    $cache.set 'ip_ranges', ip_ranges, 86400
+  end
+
+  ip_ranges
+end
+
+def is_from_kg?
+  ip_addr = IPAddr.new(request.ip)
+  kg_nets.each do |r|
+    range = IPAddr.new(r)
+    if range.include?(ip_addr)
+      return true
+    end
+  end
+  false
 end

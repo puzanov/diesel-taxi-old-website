@@ -46,8 +46,6 @@ get '/cars' do
 end
 
 post '/order' do
-  request.logger.info("Client IP #{get_user_ip}")
-  
   unless captcha_pass?
     return {:result => 'error', :message => 'Неверная каптча'}.to_json
   end
@@ -144,7 +142,7 @@ def kg_nets
 end
 
 def is_from_kg?
-  ip_addr = IPAddr.new(request.ip)
+  ip_addr = IPAddr.new(get_user_ip)
   kg_nets.each do |r|
     range = IPAddr.new(r)
     if range.include?(ip_addr)
@@ -156,7 +154,7 @@ end
 
 def allow_this_ip?
   $cache = get_memcache
-  ip = request.ip.to_s
+  ip = get_user_ip.to_s
 
   begin
     $cache.get ip, false

@@ -33,6 +33,11 @@ form {
     top: 1%;
     right: 1%;
   }
+
+  .modal {
+    width:400px;
+    margin-left: -200px;
+  }
 }
 
 form legend {
@@ -73,9 +78,4 @@ form div {
 
 #fire {
   margin-top: 20px;
-}
-
-.small-modal {
-  width:400px;
-  margin-left: -200px;
 }

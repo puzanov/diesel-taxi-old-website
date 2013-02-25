@@ -7,7 +7,7 @@
   <link href="/css/base.css" rel="stylesheet" media="screen">
 </head>
 <body onload="initialize()">
-  <div id="logo"><img src="/ima/logo.png" /></div>
+  <div id="logo"><a href="/"><img border="0" src="/ima/logo.png" /></a></div>
   <div id="wrap"></div>
   <form id="order">
     <fieldset>
@@ -61,6 +61,12 @@
         </select>
         <input class="span2" type="text" id="phone" name="phone" placeholder="Телефон..." maxlength="6" value="<%= @phone %>">
       </div>
+
+      <div>
+        <%= captcha_answer_tag %>
+        <%= captcha_image_tag %>
+      </div>
+
       <div>
         <button type="submit" id="fire" class="btn btn-success">Заказать такси</button>
       </div>

@@ -62,7 +62,7 @@
         <input class="span2" type="text" id="phone" name="phone" placeholder="Телефон..." maxlength="6" value="<%= @phone %>">
       </div>
 
-      <div>
+      <div id="captcha">
         <%= captcha_answer_tag %>
         <%= captcha_image_tag %>
       </div>
@@ -97,6 +97,7 @@
             $("#address").hide();
             $("#code").hide();
             $("#phone").hide();
+            $("#captcha").hide();
             $("#fire").hide();
             t = "<span class='label label-success'>Ваш заказ принят</span><br>"+data.message;
             $("#result").html(t).removeClass("alert-error").addClass("alert-success").show();

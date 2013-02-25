@@ -74,6 +74,9 @@ post '/order' do
     return {:result => 'error', :message => 'Вы не указали код номера вашего телефона'}.to_json
   end
 
+  unless allow_this_ip?
+    return {:result => 'error', :message => 'Лимит по вашему IP-Address исчерпан. Ограничения будут сняты через 24 часа от времени первого заказа'}.to_json
+  end
 
   begin
     case make_request_for(ORDER, {:Phone => '+996'+ params[:code] + params[:phone], :Message => params[:address]})
@@ -143,4 +146,24 @@ def is_from_kg?
     end
   end
   false
+end
+
+def allow_this_ip?
+  $cache = get_memcache
+  ip = request.ip.to_s
+
+  begin
+    $cache.get ip, false
+  rescue Memcached::NotFound
+    $cache.set ip, "1", 0, 86400
+  end
+
+  counter = $cache.increment ip
+  request.logger.info("Client IP #{ip}. Counter #{counter}")
+
+  if counter > 5
+    return false
+  end
+
+  true
 end

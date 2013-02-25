@@ -46,6 +46,8 @@ get '/cars' do
 end
 
 post '/order' do
+  request.logger.info("Client IP #{request["HTTP_X_FORWARDED_FOR"]}")
+  
   unless captcha_pass?
     return {:result => 'error', :message => 'Неверная каптча'}.to_json
   end

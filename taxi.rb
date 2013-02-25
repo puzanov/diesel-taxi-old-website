@@ -47,7 +47,7 @@ end
 
 post '/order' do
   unless captcha_pass?
-    return {:result => 'error', :message => 'Не верная каптча'}.to_json
+    return {:result => 'error', :message => 'Неверная каптча'}.to_json
   end
 
   unless is_from_kg?

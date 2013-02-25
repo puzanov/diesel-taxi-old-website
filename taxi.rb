@@ -46,7 +46,7 @@ get '/cars' do
 end
 
 post '/order' do
-  request.logger.info("Client IP #{request["HTTP_X_FORWARDED_FOR"]}")
+  request.logger.info("Client IP #{get_user_ip}")
   
   unless captcha_pass?
     return {:result => 'error', :message => 'Неверная каптча'}.to_json
@@ -172,6 +172,10 @@ def allow_this_ip?
   end
 
   true
+end
+
+def get_user_ip
+  return env['HTTP_X_FORWARDED_FOR'] if env['HTTP_X_FORWARDED_FOR'] else env['REMOTE_ADDR']
 end
 
 module Sinatra

@@ -4,7 +4,7 @@
   <title>Форма заказа Намба такси</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="/bootstrap/css/bootstrap.min.css" rel="stylesheet" media="screen">
-  <link href="/css/base.css?20130225" rel="stylesheet" media="screen">
+  <link href="/css/base.css?201302251" rel="stylesheet" media="screen">
 </head>
 <body onload="initialize()">
   <div id="logo"><a href="/"><img border="0" src="/ima/logo.png" /></a></div>
@@ -84,6 +84,35 @@
   <script type="text/javascript">
     $(function() {
       $("select[name='code']").find("option[value='<%= @code %>']").prop("selected",true);
+      var adjustModal = function($modal) {
+        var top;
+        if ($(window).width() <= 480) {
+          $modal.addClass("small-modal");
+        }
+      };
+
+      var show = function() {
+        var $modal = $(this);
+        adjustModal($modal);
+      };
+
+      var checkShow = function() {
+        $('.modal').each(function() {
+          var $modal = $(this);
+          if ($modal.css('display') !== 'block') return;
+          adjustModal($modal);
+        });
+      };
+
+      var modalWindowResize = function() {
+        $('.modal').not('.modal-gallery').on('show', show);
+        $('.modal-gallery').on('displayed', show);
+        checkShow();
+      };
+
+      $(modalWindowResize);
+      $(window).resize(modalWindowResize);
+      $(window).scroll(checkShow);
     });
 
     $("#fire").click(function(){

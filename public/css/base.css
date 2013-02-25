@@ -28,6 +28,13 @@ form {
   opacity: 0.95;
 }
 
+@media screen and (max-width: 650px) {
+  form {
+    top: 1%;
+    right: 1%;
+  }
+}
+
 form legend {
   color: white;
   border-bottom: 0;
@@ -66,4 +73,9 @@ form div {
 
 #fire {
   margin-top: 20px;
+}
+
+.small-modal {
+  width:400px;
+  margin-left: -200px;
 }

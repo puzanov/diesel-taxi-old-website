@@ -64,12 +64,17 @@ form div {
 }
 
 .info {
+  font-size:12px;
   padding-top: 10px;
 }
 
 .info a{
   color:white;
   opacity: 0.7;
+}
+
+.how{
+  padding-right: 20px;
 }
 
 #captcha-image {

@@ -159,10 +159,15 @@ def allow_this_ip?
   begin
     $cache.get ip, false
   rescue Memcached::NotFound
-    $cache.set ip, "1", 0, 86400
+    $cache.set ip, "1", 86400, false
   end
 
   counter = $cache.increment ip
+
+  if counter.to_i == 0
+    $cache.set ip, "1", 86400, false
+  end
+
   request.logger.info("Client IP #{ip}. Counter #{counter}")
 
   if counter > 5

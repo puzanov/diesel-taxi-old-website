@@ -46,10 +46,6 @@ get '/cars' do
 end
 
 post '/order' do
-  unless captcha_pass?
-    return {:result => 'error', :message => 'Неверная каптча'}.to_json
-  end
-
   unless is_from_kg?
     return {:result => 'error', :message => 'Система не распознала ваш IP-Address. Заказ возможен только для жителей Бишкека и его окрестностей'}.to_json
   end
@@ -179,31 +175,4 @@ end
 
 def get_user_ip
   return env['HTTP_X_FORWARDED_FOR'] if env['HTTP_X_FORWARDED_FOR'] else env['REMOTE_ADDR']
-end
-
-module Sinatra
-  module Captcha
-    VERSION = "0.1.0.0"
-
-    def captcha_pass?
-      session = params[:captcha_session].to_i
-      answer  = params[:captcha_answer].gsub(/\W/, '')
-      open("http://captchator.com/captcha/check_answer/#{session}/#{answer}").read.to_i.nonzero? rescue false
-    end
-
-    def captcha_session
-      @captcha_session ||= rand(9000) + 1000
-    end
-
-    def captcha_answer_tag
-      "<input class=\"span1\" id=\"captcha-answer\" name=\"captcha_answer\" type=\"text\"/>"
-    end
-
-    def captcha_image_tag
-      "<img id=\"captcha-image\" src=\"http://captchator.com/captcha/image/#{captcha_session}\"/>"+
-      "<input name=\"captcha_session\" type=\"hidden\" value=\"#{captcha_session}\"/>"
-    end
-  end
-
-  helpers Captcha
 end

@@ -35,10 +35,10 @@ get '/cars' do
   $cache = get_memcache
 
   begin
-    @cars = $cache.get 'cars'
+    @cars = $cache.get 'cars_diesel'
   rescue Memcached::NotFound
     @cars = JSON.parse(make_request_for(CARS, {:foo => 'bar'}).body)
-    $cache.set 'cars', @cars, 60
+    $cache.set 'cars_diesel', @cars, 60
   end
 
   content_type :json
@@ -102,7 +102,7 @@ end
 
 def get_api_host_and_port
   if ARGV[0] == 'production'
-    return {:host => '212.42.119.12', :port => 80}
+    return {:host => 'http://212.42.102.247/', :port => 80}
   end
   {:host => 'testnambaapi.zapto.org', :port => 8085}
 end
@@ -127,11 +127,11 @@ def kg_nets
   $cache = get_memcache
 
   begin
-    ip_ranges = $cache.get 'ip_ranges'
+    ip_ranges = $cache.get 'ip_ranges_diesel'
   rescue Memcached::NotFound
     ip_ranges = open('http://www.elcat.kg/ip/kg-nets.txt').read.split
     ip_ranges << '127.0.0.0/8'
-    $cache.set 'ip_ranges', ip_ranges, 86400
+    $cache.set 'ip_ranges_diesel', ip_ranges, 86400
   end
 
   ip_ranges
@@ -150,7 +150,7 @@ end
 
 def allow_this_ip?
   $cache = get_memcache
-  ip = get_user_ip.to_s
+  ip = get_user_ip.to_s + 'diesel'
 
   begin
     $cache.get ip, false

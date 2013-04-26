@@ -15,7 +15,7 @@ require 'open-uri'
 CARS  = '/SmartServerApi/Api/GetFreeDrivers'
 ORDER = '/SmartServerApi/Api/MakeOrderAsIncomingSms'
 
-set :port, 1983
+set :port, 1980
 
 if ARGV[0] == 'production'
   set :environment, :production

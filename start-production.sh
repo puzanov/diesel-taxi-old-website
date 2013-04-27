@@ -1,3 +1,3 @@
 #!/bin/sh
-pkill -9 -f "taxi"
-nohup ruby taxi.rb production >> /tmp/diesel.log 2>&1 &
+pkill -9 -f "diesel"
+nohup ruby diesel.rb production >> /tmp/diesel.log 2>&1 &

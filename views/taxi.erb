@@ -139,14 +139,14 @@
       }
 
       price_light = 50 + (distance_km - 1)*10;
-      $('#price-light').text(price_light + " с.");
+      $('#price-light').text(price_light.toFixed(1) + " с.");
 
       if (distance_km < 8) {
         distance_km = 8
       }
 
       price_kingsize = 500 + (distance_km - 8)*50;
-      $('#price-kingsize').text(price_kingsize + " с.");
+      $('#price-kingsize').text(price_kingsize.toFixed(1) + " с.");
     }
 
     function initialize() {

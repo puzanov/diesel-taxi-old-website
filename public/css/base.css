@@ -18,15 +18,19 @@ body {
   left: 0;
 }
 
-form {
+.right {
   z-index: 100;
   position: absolute;
   top: 15%;
   right: 10%;
-  background-color: #00733b;
-  padding:20px;
-  opacity: 0.95;
 }
+
+.right form {
+  background-color: #00733b;
+  opacity: 0.95;
+  padding:20px;
+}
+
 
 @media screen and (max-width: 650px) {
   form {
@@ -83,4 +87,11 @@ form div {
 
 #fire {
   margin-top: 20px;
+}
+
+.diesel-alert {
+  background-color: #435267 !important;
+  color: white !important;
+  width: 210px;
+  text-shadow: none !important;
 }

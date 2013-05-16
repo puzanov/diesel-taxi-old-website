@@ -9,7 +9,8 @@
 <body onload="initialize()">
   <div id="logo"><a href="/"><img border="0" src="/ima/logo.png" /></a></div>
   <div id="wrap"></div>
-  <form id="order">
+  <div class="right">
+    <form id="order">
     <fieldset>
       <legend>Онлайн заказ такси</legend>
       <div id="result" class="alert"></div>
@@ -72,6 +73,12 @@
       <a href="http://diesel.elcat.kg/index.php?showtopic=27625184" target="_blank">О Дизель такси</a>
     </div>
   </form>
+
+    <div class="alert alert-info diesel-alert">
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+      Вы можете узнать расстояние и стоимость поездки между двумя точками отметив их на карте
+    </div>
+  </div>
 
   <script src="/js/jquery.js"></script>
   <script src="/js/underscore-min.js"></script>

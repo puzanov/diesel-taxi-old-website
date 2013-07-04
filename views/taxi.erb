@@ -153,7 +153,7 @@
       }
 
       price_kingsize = 500 + (distance_km - 8)*50;
-      $('#price-kingsize').text(price_kingsize.toFixed(1) + " с.");
+      //$('#price-kingsize').text(price_kingsize.toFixed(1) + " с.");
     }
 
     function initialize() {
@@ -263,7 +263,6 @@
     <div class="modal-body">
       <p>Расстояние: <span id="distance" class="label label-warning"></span></p>
       <p>Стоимость легкового такси: <span id="price-light" class="label label-success"></span></p>
-      <p>Стоимость грузового такси: <span id="price-kingsize" class="label label-success"></span></p>
       <div class="alert">
         <strong>Внимание!</strong> Данные расчеты являются приблизительными и могут отличаться от фактической стоимости поездки.
         Более детальную информацию вы можете узнать у оператора по телефону <span class="label label-success">1450</span>

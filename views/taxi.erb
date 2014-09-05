@@ -63,7 +63,17 @@
         </select>
         <input class="span2" type="text" id="phone" name="phone" placeholder="Телефон..." maxlength="6" value="<%= @phone %>">
       </div>
-
+      <div>
+        <label class="radio-inline">
+          <input type="radio" name="car_type" value="standart" checked> <span style="color:white;">Стандарт</span>
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="car_type" value="comfort"> <span style="color:white;">Комфорт</span>
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="car_type" value="business" disabled> <span style="color:white;">Бизнес</span>
+        </label>
+      </div>
       <div>
         <button type="submit" id="fire" class="btn btn-success">Заказать такси</button>
       </div>

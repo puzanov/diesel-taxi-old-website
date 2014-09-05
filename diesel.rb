@@ -103,16 +103,27 @@ end
 
 ### helper functions ###
 
-def get_api_host_and_port
+def get_api_host_and_port_standart
   if ARGV[0] == 'production'
     return {:host => '212.42.102.247', :port => 80}
   end
   {:host => 'testnambaapi.zapto.org', :port => 8085}
 end
 
-def make_request_for(uri, params)
+def get_api_host_and_port_comfort
+  if ARGV[0] == 'production'
+    return {:host => '212.42.102.235', :port => 8090}
+  end
+  {:host => 'testnambaapi.zapto.org', :port => 8085}
+end
+
+def make_request_for(uri, params, type)
   request.logger.info("Making request to API: #{params.inspect}")
-  api = get_api_host_and_port
+  if type == 'comfort'
+    api = get_api_host_and_port_comfort
+  else
+    api = get_api_host_and_port_standart
+  end
   request.logger.info("API address is #{api.inspect}")
   http = Net::HTTP.new(api[:host], api[:port])
   req = Net::HTTP::Post.new(uri)

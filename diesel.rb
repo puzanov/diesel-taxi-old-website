@@ -82,7 +82,7 @@ post '/order' do
   end
 
   begin
-    case make_request_for(ORDER, {:Phone => '+996'+ params[:code] + params[:phone], :Message => params[:address]})
+    case make_request_for(ORDER, {:Phone => '+996'+ params[:code] + params[:phone], :Message => params[:address]}, params[:car_type])
       when Net::HTTPOK then
         @result = {:result => 'ok', :message => 'Сейчас наш оператор свяжется с вами'}
     else

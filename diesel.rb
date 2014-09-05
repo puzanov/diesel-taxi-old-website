@@ -40,7 +40,7 @@ get '/cars' do
   begin
     @cars = $cache.get 'cars_diesel'
   rescue Memcached::NotFound
-    @cars = JSON.parse(make_request_for(CARS, {:foo => 'bar'}).body, 'standart')
+    @cars = JSON.parse(make_request_for(CARS, {:foo => 'bar'}).body, 'standart'))
     $cache.set 'cars_diesel', @cars, 60
   end
 
